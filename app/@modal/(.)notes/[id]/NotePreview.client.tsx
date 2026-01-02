@@ -4,13 +4,11 @@ import { useRouter, useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Modal from "@/components/Modal/Modal";
 import { fetchNoteById } from "@/lib/api";
-import NoteDetailsClient from "@/app/notes/[id]/NoteDetails.client";
 import css from "./NotePreview.module.css";
 
-const NotePreview = () => {
+export default function NotePreview() {
   const router = useRouter();
-  const params = useParams<{ id: string }>();
-  const id = params.id;
+  const { id } = useParams<{ id: string }>();
 
   const {
     data: note,
@@ -32,10 +30,14 @@ const NotePreview = () => {
         {isLoading && <p>Loading note...</p>}
         {error && <p>Failed to load note</p>}
 
-        {note && <NoteDetailsClient id={id} />}
+        {note && (
+          <div className={css.item}>
+            <h2>{note.title}</h2>
+            <p className={css.content}>{note.content}</p>
+            <span className={css.tag}>{note.tag}</span>
+          </div>
+        )}
       </div>
     </Modal>
   );
-};
-
-export default NotePreview;
+}

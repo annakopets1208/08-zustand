@@ -11,10 +11,10 @@ import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 
 interface NotesClientProps {
-  initialTag?: string;
+  tag: string;
 }
 
-export default function NotesClient({ initialTag }: NotesClientProps) {
+export default function NotesClient({ tag }: NotesClientProps) {
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,11 +28,8 @@ export default function NotesClient({ initialTag }: NotesClientProps) {
   );
 
   const { data } = useQuery({
-    queryKey: [
-      "notes",
-      { page: currentPage, searchValue: name, tag: initialTag },
-    ],
-    queryFn: () => fetchNotes(name, currentPage, initialTag),
+    queryKey: ["notes", { page: currentPage, searchValue: name, tag: tag }],
+    queryFn: () => fetchNotes(name, currentPage, tag),
     placeholderData: keepPreviousData,
   });
 
