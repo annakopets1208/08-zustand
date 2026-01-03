@@ -44,10 +44,12 @@ export default function NoteForm({ onClose }: NoteFormProps) {
           <label htmlFor="title">Title</label>
           <input
             id="title"
+            type="text"
             name="title"
             value={draft?.title}
             required
             className={css.input}
+            onChange={handleChange}
           />
         </div>
 

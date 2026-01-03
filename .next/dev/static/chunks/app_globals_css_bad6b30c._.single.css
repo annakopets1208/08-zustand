@@ -1,0 +1,11 @@
+/* [project]/app/globals.css [app-client] (css) */
+body {
+  font-family: var(--font-roboto), sans-serif;
+  background-color: #f8f9fa;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+}
+
+/*# sourceMappingURL=app_globals_css_bad6b30c._.single.css.map*/

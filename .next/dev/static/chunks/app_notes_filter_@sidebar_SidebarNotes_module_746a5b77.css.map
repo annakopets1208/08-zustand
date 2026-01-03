@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///D:/%D0%90%D0%BD%D1%8E%D1%82%D0%B0/vs%20code/Projects/08-zustand/app/notes/filter/%40sidebar/SidebarNotes.module.css"],"sourcesContent":[".menuList {\r\n  list-style-type: none;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n.menuItem {\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.menuLink {\r\n  text-decoration: none;\r\n  color: white;\r\n  font-size: 16px;\r\n  display: block;\r\n  padding: 8px 16px;\r\n  transition: background-color 0.3s ease;\r\n}\r\n\r\n.menuLink:hover {\r\n  background-color: #444;\r\n  color: #ddd;\r\n}\r\n"],"names":[],"mappings":"AAAA;;;;;;AAMA;;;;AAIA;;;;;;;;;AASA"}}]
+}

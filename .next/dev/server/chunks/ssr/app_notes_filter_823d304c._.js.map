@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/notes/filter/LayoutNotes.module.css [app-rsc] (css module)"],"sourcesContent":["__turbopack_context__.v({\n  \"container\": \"LayoutNotes-module__Eh5KMq__container\",\n  \"notesWrapper\": \"LayoutNotes-module__Eh5KMq__notesWrapper\",\n  \"sidebar\": \"LayoutNotes-module__Eh5KMq__sidebar\",\n});\n"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA"}},
+    {"offset": {"line": 12, "column": 0}, "map": {"version":3,"sources":["file:///D:/%D0%90%D0%BD%D1%8E%D1%82%D0%B0/vs%20code/Projects/08-zustand/app/notes/filter/layout.tsx"],"sourcesContent":["import type { ReactNode } from \"react\";\r\nimport css from \"./LayoutNotes.module.css\";\r\n\r\ntype Props = {\r\n  children: ReactNode;\r\n  sidebar: ReactNode;\r\n};\r\n\r\nconst NotesLayout = ({ children, sidebar }: Props) => {\r\n  return (\r\n    <section className={css.container}>\r\n      <aside className={css.sidebar}>{sidebar}</aside>\r\n      <main className={css.notesWrapper}>{children}</main>\r\n    </section>\r\n  );\r\n};\r\n\r\nexport default NotesLayout;\r\n"],"names":[],"mappings":";;;;;AACA;;;AAOA,MAAM,cAAc,CAAC,EAAE,QAAQ,EAAE,OAAO,EAAS;IAC/C,qBACE,8OAAC;QAAQ,WAAW,4JAAG,CAAC,SAAS;;0BAC/B,8OAAC;gBAAM,WAAW,4JAAG,CAAC,OAAO;0BAAG;;;;;;0BAChC,8OAAC;gBAAK,WAAW,4JAAG,CAAC,YAAY;0BAAG;;;;;;;;;;;;AAG1C;uCAEe"}}]
+}
