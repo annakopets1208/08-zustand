@@ -16,11 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const note = await fetchNoteById(id);
   return {
     title: note.title,
-    description: note.content.slice(0, 30),
+    description: note.content,
     openGraph: {
       title: note.title,
       description: note.content.slice(0, 30),
-      url: `https://notehub-public.goit.study/notes/${note.id}`,
+      url: `https://07-routing-nextjs-rust-nu.vercel.app/notes/${id}`,
       images: [
         {
           url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
@@ -44,7 +44,7 @@ export default async function NoteDetailsPage({ params }: Props) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient id={id} />
+      <NoteDetailsClient />
     </HydrationBoundary>
   );
 }

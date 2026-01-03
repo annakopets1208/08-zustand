@@ -1,22 +1,54 @@
 import css from "./NoteForm.module.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { NoteMin } from "../../types/note";
+import { createNote } from "@/lib/api";
+import { useNoteDraftStore } from "@/lib/store/noteStore";
 
-export default function NoteForm() {
-  async function createNoteAction(formData: FormData) {
-    "use server";
+interface NoteFormProps {
+  onClose: () => void;
+}
 
-    const title = formData.get("title");
-    const content = formData.get("content");
-    const tag = formData.get("tag");
+export default function NoteForm({ onClose }: NoteFormProps) {
+  const queryClient = useQueryClient();
+  const { draft, setDraft, clearDraft } = useNoteDraftStore();
 
-    console.log({ title, content, tag });
-  }
+  const handleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setDraft({
+      ...draft,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const mutationCreate = useMutation({
+    mutationFn: (note: NoteMin) => createNote(note),
+    onSuccess: () => {
+      clearDraft();
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      onClose();
+    },
+  });
+
+  const createNoteAction = (formData: FormData) => {
+    const values = Object.fromEntries(formData) as unknown as NoteMin;
+    mutationCreate.mutate(values);
+  };
 
   return (
     <>
       <form action={createNoteAction} className={css.form}>
         <div className={css.formGroup}>
           <label htmlFor="title">Title</label>
-          <input id="title" name="title" required className={css.input} />
+          <input
+            id="title"
+            name="title"
+            value={draft?.title}
+            required
+            className={css.input}
+          />
         </div>
 
         <div className={css.formGroup}>
@@ -26,12 +58,21 @@ export default function NoteForm() {
             name="content"
             rows={8}
             className={css.textarea}
+            onChange={handleChange}
+            value={draft?.content}
+            required
           />
         </div>
 
         <div className={css.formGroup}>
           <label htmlFor="tag">Tag</label>
-          <select id="tag" name="tag" className={css.select}>
+          <select
+            id="tag"
+            name="tag"
+            className={css.select}
+            onChange={handleChange}
+            value={draft?.tag}
+          >
             <option value="Todo">Todo</option>
             <option value="Work">Work</option>
             <option value="Personal">Personal</option>
@@ -41,7 +82,10 @@ export default function NoteForm() {
         </div>
 
         <div className={css.actions}>
-          <button type="submit" className={css.submitButton}>
+          <button type="button" className={css.cancelButton} onClick={onClose}>
+            Cancel
+          </button>
+          <button type="submit" className={css.submitButton} disabled={false}>
             Create note
           </button>
         </div>
@@ -49,33 +93,3 @@ export default function NoteForm() {
     </>
   );
 }
-
-// import { Formik, Form, Field, ErrorMessage } from "formik";
-// import * as Yup from "yup";
-// import type { NoteMin } from "../../types/note";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import type { FormikHelpers } from "formik";
-// import { createNote } from "@/lib/api";
-
-// interface NoteFormProps {
-//   onClose: () => void;
-// }
-
-// const TAGS = ["Todo", "Work", "Personal", "Meeting", "Shopping"] as const;
-
-// const initialValues: NoteMin = {
-//   title: "",
-//   content: "",
-//   tag: "Todo",
-// };
-
-// const validationSchema = Yup.object().shape({
-//   title: Yup.string()
-//     .min(3, "Title must be at least 3 charecters")
-//     .max(50, "Too long title")
-//     .required("Title is required"),
-//   content: Yup.string().max(500, "Too long content"),
-//   tag: Yup.string()
-//     .oneOf(TAGS, "Invalid tag value")
-//     .required("Tag is required"),
-// });

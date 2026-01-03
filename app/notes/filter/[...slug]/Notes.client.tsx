@@ -11,12 +11,13 @@ import Pagination from "@/components/Pagination/Pagination";
 import Link from "next/link";
 
 interface NotesClientProps {
-  tag: string;
+  slug: string[];
 }
 
-export default function NotesClient({ tag }: NotesClientProps) {
+export default function NotesClient({ slug }: NotesClientProps) {
   const [name, setName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const category = slug?.[0] === "all" ? undefined : slug?.[0];
 
   const handleChange = useDebouncedCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,35 +28,30 @@ export default function NotesClient({ tag }: NotesClientProps) {
   );
 
   const { data } = useQuery({
-    queryKey: ["notes", { page: currentPage, searchValue: name, tag }],
-    queryFn: () => fetchNotes(name, currentPage, tag),
+    queryKey: ["notes", name, currentPage, slug?.[0]],
+    queryFn: () => fetchNotes(name, currentPage, category),
     placeholderData: keepPreviousData,
   });
 
   return (
-    <div className={css.app}>
-      <header className={css.toolbar}>
-        <SearchBox onChange={handleChange} />
-        <Link href="/notes/action/create" className={css.button}>
-          Create note +
-        </Link>
-      </header>
-
-      {data?.notes && data.notes.length > 0 ? (
-        <>
-          <NoteList notes={data.notes} />
-          {data.totalPages > 1 && (
+    <>
+      <div className={css.app}>
+        <header className={css.toolbar}>
+          <SearchBox onChange={handleChange} />
+          {data?.notes?.length !== 0 && (data?.totalPages ?? 0) > 1 && (
             <Pagination
-              totalPages={data.totalPages}
+              totalPages={data?.totalPages ?? 0}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
           )}
-        </>
-      ) : (
-        <p>No notes found</p>
-      )}
-    </div>
+          <Link className={css.button} href={"/notes/action/create"}>
+            Create note +
+          </Link>
+        </header>
+        <NoteList notes={data?.notes ?? []} />
+      </div>
+    </>
   );
 }
 

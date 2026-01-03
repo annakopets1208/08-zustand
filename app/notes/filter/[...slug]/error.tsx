@@ -5,11 +5,7 @@ type Props = {
 };
 
 const Error = ({ error }: Props) => {
-  return (
-    <div>
-      <p>Could not fetch the list of notes. {error.message}</p>
-    </div>
-  );
+  return <p>Could not fetch the list of notes. {error.message}</p>;
 };
 
 export default Error;
